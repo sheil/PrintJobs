@@ -49,7 +49,7 @@ class Email {
     public function send(array $to)
     {
         $subject = "Job Stalled on Printer {$this->printer->name}!";
-        $body = "Hello citizen, \n There is a stalled job on printer {$this->printer->name}. You can view more at"
+        $body = "Greetings comrade, \n There is a stalled job on printer {$this->printer->name}. You can view more at"
             . " {$this->printer->url}";
 
         $this->message

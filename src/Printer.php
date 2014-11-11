@@ -11,16 +11,18 @@ class Printer {
     public $client;
     public $url;
     public $name;
+    public $ip;
 
     /**
      * Construct a new Printer.
-     *
+     * @param $ip
      * @param $url
-     * @param $printer_name
+     * @param $name
      * @param \Goutte\Client $client
      */
-    public function __construct($url, $printer_name, \Goutte\Client $client) {
-        $this->name = $printer_name;
+    public function __construct($ip, $name, $url,\Goutte\Client $client) {
+        $this->name = $name;
+        $this->ip = $ip;
         $this->client = $client;
         $this->url = $url;
     }
@@ -58,4 +60,9 @@ class Printer {
     public static function getNameFromUrl($url) {
         return explode('/', explode('.', $url)[3])[0];
     }
+
+    public function toString() {
+        return "Name: " . $this->name . " url: " . $this->url . "\n"; 
+    }
+
 } 

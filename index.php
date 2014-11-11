@@ -1,4 +1,4 @@
-<?php
+ <?php
 use Tpavlek\PrintJobs\IO;
 
 require "bootstrap/start.php";
@@ -9,9 +9,14 @@ require "bootstrap/start.php";
  */
 $io = $container->get('io');
 
-foreach ($printjobs_config['printer_urls'] as $printer_url) {
-    $printer_name = \Tpavlek\PrintJobs\Printer::getNameFromUrl($printer_url);
-    $printer = new \Tpavlek\PrintJobs\Printer($printer_url . $printjobs_config['jobs_path'], $printer_name, $container->get('client'));
+foreach ($printjobs_config['printers'] as $pr) {
+    // $printer_name = \Tpavlek\PrintJobs\Printer::getNameFromUrl($printer_url);
+    //$printer = new \Tpavlek\PrintJobs\Printer($printer_url . $printjobs_config['jobs_path'], $printer_name, $container->get('client'));
+
+    $printer_url = "https://" . $pr['ip'] . "/" . $printjobs_config['jobs_path'] ;
+    $printer = new \Tpavlek\PrintJobs\Printer(
+        $pr['ip'], $pr['name'], $printer_url, $container->get('client')
+    );
 
     try {
         $job = $printer->getFirstRemoteJob();
@@ -19,7 +24,7 @@ foreach ($printjobs_config['printer_urls'] as $printer_url) {
         // If there are no current jobs, we can clear the current job hash for that printer
         if (is_null($job)) {
             $printer->getFilesystem()->clear();
-            $io->message("No current jobs on printer: {$printer_name}\n");
+            $io->message("No current jobs on printer: {$printer->name}\n");
             continue;
         }
 
@@ -57,6 +62,7 @@ foreach ($printjobs_config['printer_urls'] as $printer_url) {
     } catch (\Exception $exception) {
         $io->error($exception->getMessage() ."\n");
     }
+    
 }
 
 
