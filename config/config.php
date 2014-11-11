@@ -4,14 +4,7 @@ $printjobs_config = [
    // Base path for logging
    'path' => '/home/sheil/www/PrintJobs',
 
-    // Web addresses of all the printers we want to check on
-    'printer_urls' => [
-        "https://129.128.183.8/",
-        "https://129.128.183.21/",
-        "https://129.128.183.22/",
-        "https://129.128.183.51/",
-	    "https://142.244.15.5/"
-    ],
+    // Printer definitions
     'printers' => [
         ['name' => '2nd_Floor', 'ip' => '129.128.183.8'], 
         ['name' => '3rd_Floor_A', 'ip' => '129.128.183.22'],
